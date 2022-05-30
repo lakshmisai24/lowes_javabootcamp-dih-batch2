@@ -1,8 +1,6 @@
-import EmployeeService.EmployeeServiceImplem;
-import EmployeeService.ImportExportData;
-import EmployeeModel.Employee;
-import EmployeeModel.Employee;
-import EmployeeService.EmployeeServiceImplem;
+import EmpManagementAppService.EmployeeServiceImplem;
+import EmpManagementAppService.ImportExportData;
+import EmpMangementAppModel.Employee;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,10 +9,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.function.Function;
-
-import static EmployeeService.EmployeeValidation.handleError;
-import static EmployeeService.EmployeeValidation.validate;
 
 public class EmployeeMain {
     public static void main(String[] args) {
@@ -24,25 +18,21 @@ public class EmployeeMain {
         String ename, designation, department, country;
         EmployeeServiceImplem eser = new EmployeeServiceImplem();
         do {
-            System.out.println("-----------------Welcome To Employee Management App------------------" + '\n' +
+            System.out.println("--------------------Welcome To Employee Management App-----------------------" + '\n' +
                     "1.Add Employee" + '\n' + "2.View Employee" + '\n' + "3.Update Employee" + '\n' +
-                    "4.Delete Employee" + '\n' + "5.View All Employees" + '\n' + "6.Print Statistics " + '\n' + "7.Import" + '\n' + "8.Export" + '\n'
-                    + "9.Exit" + '\n' + "Select Any Option From the Menu :");
+                    "4.Delete Employee" + '\n' + "5.View All Employees" + '\n' + "6.Import" + '\n'+"7.Export" +'\n'
+                    +"8.Exit" +'\n'+"Select Any Option From the Menu :");
 
             int option = sc.nextInt();
             switch (option) {
                 case 1:
-                    //Employee emodel = new Employee();
+
                     System.out.print("Enter Employee name : ");
                     ename = sc.next();
-
                     //Generating Employee Id in service based Employee size
                     id = eser.createEmpid();
-
-
                     System.out.print("Enter Employee  Age : ");
                     age = sc.nextInt();
-
                     System.out.print("Enter Employee Designation : ");
                     designation = sc.next();
                     System.out.print("Enter Employee Department : ");
@@ -58,8 +48,9 @@ public class EmployeeMain {
 
                     Employee e = new Employee(id, ename, age, designation, department, country,
                             sal, date, createTime, modifyTime);
-                    // Logic to save employee details
+                    //Calling Service to Call Employee
                     eser.createEmployee(id, e);
+
                     break;
                 case 2:
                     System.out.println("Enter Employee Id");
@@ -68,7 +59,6 @@ public class EmployeeMain {
 
                     break;
                 case 3:
-
                     System.out.println("Enter Employee Id to Update");
                     id = sc.nextInt();
 
@@ -102,35 +92,33 @@ public class EmployeeMain {
                     eser.viewAllEmployees();
                     break;
                 case 6:
-                    eser.printStatistics();
-                    break;
-                case 7:
                     ExecutorService executorService = Executors.newFixedThreadPool(2);
                     Future<Boolean> importFuture = executorService.submit(new Callable<Boolean>() {
                         @Override
                         public Boolean call() throws Exception {
                             System.out.println("Import Process on Thread name: " + Thread.currentThread().getName());
                             Thread.sleep(2000);
-                            eser.bulkImport();
+                            eser.ImportData();
                             executorService.shutdown();
+                            eser.viewAllEmployees();
                             return true;
                         }
                     });
                     break;
-                case 8:
+                case 7:
                     ExecutorService executorService1 = Executors.newFixedThreadPool(2);
                     Future<Boolean> importFuture1 = executorService1.submit(new Callable<Boolean>() {
                         @Override
                         public Boolean call() throws Exception {
                             System.out.println("Import Process on Thread name: " + Thread.currentThread().getName());
                             Thread.sleep(2000);
-                            eser.bulkExport();
+                            eser.ExportData();
                             executorService1.shutdown();
                             return true;
                         }
                     });
                     break;
-                case 9:
+                case 8:
                     return;
 
                 default:

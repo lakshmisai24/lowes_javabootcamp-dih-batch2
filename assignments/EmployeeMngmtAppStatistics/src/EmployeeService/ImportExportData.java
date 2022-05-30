@@ -23,7 +23,6 @@ public class ImportExportData {
             PrintWriter out = null;
 
             in = new BufferedReader(new FileReader("C:\\Training\\lowes_javabootcamp-dih-batch2\\temp1\\input.txt"));
-            out = new PrintWriter(new FileWriter("C:\\Training\\lowes_javabootcamp-dih-batch2\\temp1\\output.txt"));
 
             String line = null;
 
@@ -49,9 +48,9 @@ public class ImportExportData {
             Iterator<Employee> it = empMap.values().iterator();
             while (it.hasNext()) {
                 Employee e = it.next();
-                System.out.println("Emp ID \t Name \t Age \t Designation   \t Department    \t Country   \t Salary  \t DateofJoining  \t CreatedTime   \t ModifiedTime");
-                System.out.printf("%d   \t %s   \t%d  \t%s   \t%s   \t %s     \t %d  \n ", e.getEmpid(), e.getName(),
-                        e.getAge(), e.getDesignation(), e.getDepartment(), e.getCountry(), e.getSalary(), e.getDateofjoining(), e.getCreatedTime(), e.getModifiedtime());
+                //System.out.println("Emp ID \t Name \t Age \t Designation   \t Department    \t Country   \t Salary  \t DateofJoining  \t CreatedTime   \t ModifiedTime");
+                //System.out.printf("%d   \t %s   \t%d  \t%s   \t%s   \t %s     \t %d  \n ", e.getEmpid(), e.getName(),
+                        //e.getAge(), e.getDesignation(), e.getDepartment(), e.getCountry(), e.getSalary(), e.getDateofjoining(), e.getCreatedTime(), e.getModifiedtime());
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
