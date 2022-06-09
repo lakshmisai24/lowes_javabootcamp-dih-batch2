@@ -1,8 +1,10 @@
-package com.empapp.dao;
+package dao;
 
-import com.empapp.service.ExportEmpDataService;
-import com.empapp.service.ImportExportData;
-import com.empapp.model.Employee;
+
+import model.Employee;
+import org.springframework.stereotype.Component;
+import service.ExportEmpDataService;
+import service.ImportExportData;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -19,9 +21,10 @@ import java.util.concurrent.Executors;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+@Component
 public class EmployeeDaoServiceImpl implements EmployeeDaoService {
 
-    EmployeeDaoServiceImpl employeeDao;
+   EmployeeDaoServiceImpl employeeDao;
     List<Employee> employeeList = new ArrayList<>();
 
     Connection con = null;
@@ -146,7 +149,6 @@ public class EmployeeDaoServiceImpl implements EmployeeDaoService {
 
     @Override
     public Employee get(int empId) {
-
         Employee emp = new Employee();
         try {
             con = getConnection();
@@ -268,12 +270,14 @@ public class EmployeeDaoServiceImpl implements EmployeeDaoService {
 
     @Override
     public long getEmployeeCountAgeGreaterThan(Predicate<Employee> condition) {
+        employeeList=displayemployees();
         return employeeList.stream().filter(condition).count();
 
     }
 
     @Override
     public List<Integer> getEmployeeIdsAgeGreaterThan(int age) {
+        employeeList=displayemployees();
         return employeeList
                 .stream()
                 .filter(employee -> employee.getAge() > age)
@@ -282,6 +286,7 @@ public class EmployeeDaoServiceImpl implements EmployeeDaoService {
 
     @Override
     public Map<String, Long> getEmployeeCountByDepartment() {
+        employeeList=displayemployees();
         return employeeList
                 .stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.counting()));
@@ -289,6 +294,7 @@ public class EmployeeDaoServiceImpl implements EmployeeDaoService {
 
     @Override
     public Map<String, Long> getEmployeeCountByDepartmentOrdered() {
+        employeeList=displayemployees();
         return employeeList
                 .stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment, TreeMap::new, Collectors.counting()));
@@ -296,6 +302,7 @@ public class EmployeeDaoServiceImpl implements EmployeeDaoService {
 
     @Override
     public Map<String, Double> getAvgEmployeeAgeByDept() {
+        employeeList=displayemployees();
          return employeeList
                 .stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.averagingDouble(Employee::getAge)))
@@ -310,6 +317,7 @@ public class EmployeeDaoServiceImpl implements EmployeeDaoService {
 
     @Override
     public List<String> getDepartmentsHaveEmployeesMoreThan(int criteria) {
+        employeeList=displayemployees();
          return employeeList
                 .stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.counting()))
@@ -322,6 +330,7 @@ public class EmployeeDaoServiceImpl implements EmployeeDaoService {
 
     @Override
     public List<String> getEmployeeNamesStartsWith(String prefix) {
+        employeeList=displayemployees();
          return employeeList
                 .stream()
                 .map(Employee::getName)
@@ -331,6 +340,7 @@ public class EmployeeDaoServiceImpl implements EmployeeDaoService {
 
     @Override
     public Map<String, Double> getAvgEmployeeServiceByDept() {
+        employeeList=displayemployees();
          return employeeList
                 .stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.averagingInt(employees -> {
