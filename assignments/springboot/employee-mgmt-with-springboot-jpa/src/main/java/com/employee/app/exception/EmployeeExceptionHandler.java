@@ -50,11 +50,11 @@ public class EmployeeExceptionHandler {
 		
 		
 		
-		/*@ExceptionHandler(Exception.class)
+		@ExceptionHandler(Exception.class)
 		public ResponseEntity<ResponseMessage>  handleGenericErrors(Exception ex) {
 			ResponseMessage response = new ResponseMessage("Failure", ex.getMessage());
 			return ResponseEntity.internalServerError().body(response);
-		}*/
+		}
 
 	}
 
